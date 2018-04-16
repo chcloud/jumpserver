@@ -1,4 +1,5 @@
-{% load static %} {% load i18n %}
+{% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 
@@ -6,13 +7,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Jumpserver </title>
-    <link rel="shortcut icon" href="{% static " img/facio.ico " %}" type="image/x-icon"> {% include '_head_css_js.html' %}
-    <link href="{% static " css/jumpserver.css " %}" rel="stylesheet">
-    <script src="{% static " js/jumpserver.js " %}"></script>
+    <link rel="shortcut icon" href="{% static "img/facio.ico" %}" type="image/x-icon">
+    {% include '_head_css_js.html' %}
+    <link href="{% static "css/jumpserver.css" %}" rel="stylesheet">
+    <script src="{% static "js/jumpserver.js" %}"></script>
     <style>
         .captcha {
-            float: right;
-        }
+             float: right;
+         }
     </style>
 </head>
 
@@ -20,7 +22,7 @@
     <div class="loginColumns animated fadeInDown">
         <div class="row">
             <div class="col-md-6">
-                <h2 class="font-bold">欢迎使用Matrix云平台开源堡垒机</h2>
+                <h2 class="font-bold">欢迎使用Matrix云平台堡垒机</h2>
                 <p>
                     全球首款完全开源的堡垒机，使用GNU GPL v2.0开源协议，是符合 4A 的专业运维审计系统。
                 </p>
@@ -42,11 +44,14 @@
                         <span class="font-bold text-center" style="font-size: 24px; font-family: inherit; margin-left: 20px">{% trans 'Login' %}</span>
                     </div>
                     <form class="m-t" role="form" method="post" action="">
-                        {% csrf_token %} {% if form.errors %} {% if 'captcha' in form.errors %}
-                        <p class="red-fonts">{% trans 'Captcha invalid' %}</p>
-                        {% else %}
-                        <p class="red-fonts">{{ form.non_field_errors.as_text }}</p>
-                        {% endif %} {% endif %}
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% if 'captcha' in form.errors %}
+                                <p class="red-fonts">{% trans 'Captcha invalid' %}</p>
+                            {% else %}
+                                <p class="red-fonts">{{ form.non_field_errors.as_text }}</p>
+                            {% endif %}
+                        {% endif %}
                         <div class="form-group">
                             <input type="text" class="form-control" name="{{ form.username.html_name }}" placeholder="{% trans 'Username' %}" required="">
                         </div>
@@ -77,10 +82,9 @@
         <hr/>
         <div class="row">
             <div class="col-md-12">
-                {% include '_copyright.html' %}
+                 {% include '_copyright.html' %}
             </div>
         </div>
     </div>
 </body>
-
 </html>
