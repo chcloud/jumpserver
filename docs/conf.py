@@ -21,7 +21,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'Matrix Jumpserver'
-copyright = '云基础平台© 2014-2018'
+copyright = '软件与服务中心Matrix云平台© 2014-2018'
 author = 'Jumpserver team'
 
 # The short X.Y version
