@@ -214,7 +214,7 @@ def test_admin_user_connectability_period():
 @shared_task
 def test_admin_user_connectability_manual(admin_user):
     # task_name = _("Test admin user connectability: {}").format(admin_user.name)
-    task_name = _("测试管理行号可连接性: {}").format(admin_user.name)
+    task_name = _("测试管理账号可连接性: {}").format(admin_user.name)
     return test_admin_user_connectability_util(admin_user, task_name)
 
 
