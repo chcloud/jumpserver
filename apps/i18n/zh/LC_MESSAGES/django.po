@@ -519,8 +519,9 @@ msgstr ""
 msgid "定期测试管理账号可连接性: {}"
 msgstr ""
 
-#: assets/tasks.py:220
-msgid "测试管理行号可连接性: {}"
+
+#: assets/tasks.py:217
+msgid "测试管理账号可连接性: {}"
 msgstr ""
 
 #: assets/tasks.py:230

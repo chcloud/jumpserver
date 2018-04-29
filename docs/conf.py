@@ -20,14 +20,14 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'Jumpserver'
-copyright = '北京堆栈科技有限公司 © 2014-2018'
+project = 'Matrix Jumpserver'
+copyright = '软件与服务中心Matrix云平台© 2014-2018'
 author = 'Jumpserver team'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.5.0'
+release = '1.2.0'
 
 
 # -- General configuration ---------------------------------------------------
