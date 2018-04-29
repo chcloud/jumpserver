@@ -4,7 +4,6 @@
 
 import uuid
 import logging
-import random
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -35,6 +34,19 @@ def default_node():
         return None
 
 
+class AssetQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
+
+    def valid(self):
+        return self.active()
+
+
+class AssetManager(models.Manager):
+    def get_queryset(self):
+        return AssetQuerySet(self.model, using=self._db)
+
+
 class Asset(models.Model):
     # Important
     PLATFORM_CHOICES = (
@@ -49,6 +61,7 @@ class Asset(models.Model):
     ip = models.GenericIPAddressField(max_length=32, verbose_name=_('IP'), db_index=True)
     hostname = models.CharField(max_length=128, unique=True, verbose_name=_('Hostname'))
     port = models.IntegerField(default=22, verbose_name=_('Port'))
+    platform = models.CharField(max_length=128, choices=PLATFORM_CHOICES, default='Linux', verbose_name=_('Platform'))
     domain = models.ForeignKey("assets.Domain", null=True, blank=True, related_name='assets', verbose_name=_("Domain"), on_delete=models.SET_NULL)
     nodes = models.ManyToManyField('assets.Node', default=default_node, related_name='assets', verbose_name=_("Nodes"))
     is_active = models.BooleanField(default=True, verbose_name=_('Is active'))
@@ -72,7 +85,6 @@ class Asset(models.Model):
     disk_total = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_('Disk total'))
     disk_info = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_('Disk info'))
 
-    platform = models.CharField(max_length=128, choices=PLATFORM_CHOICES, default='Linux', verbose_name=_('Platform'))
     os = models.CharField(max_length=128, null=True, blank=True, verbose_name=_('OS'))
     os_version = models.CharField(max_length=16, null=True, blank=True, verbose_name=_('OS version'))
     os_arch = models.CharField(max_length=16, blank=True, null=True, verbose_name=_('OS arch'))
@@ -82,6 +94,8 @@ class Asset(models.Model):
     created_by = models.CharField(max_length=32, null=True, blank=True, verbose_name=_('Created by'))
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name=_('Date created'))
     comment = models.TextField(max_length=128, default='', blank=True, verbose_name=_('Comment'))
+
+    objects = AssetManager()
 
     def __str__(self):
         return '{0.hostname}({0.ip})'.format(self)
