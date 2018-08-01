@@ -19,7 +19,7 @@ signer = get_signer()
 class AssetUser(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=128, unique=True, verbose_name=_('Name'))
-    username = models.CharField(max_length=32, verbose_name=_('Username'), validators=[alphanumeric])
+    username = models.CharField(max_length=32, blank=True, verbose_name=_('Username'), validators=[alphanumeric])
     _password = models.CharField(max_length=256, blank=True, null=True, verbose_name=_('Password'))
     _private_key = models.TextField(max_length=4096, blank=True, null=True, verbose_name=_('SSH private key'), validators=[private_key_validator, ])
     _public_key = models.TextField(max_length=4096, blank=True, verbose_name=_('SSH public key'))
@@ -104,10 +104,16 @@ class AssetUser(models.Model):
         if update_fields:
             self.save(update_fields=update_fields)
 
+    def clear_auth(self):
+        self._password = ''
+        self._private_key = ''
+        self._public_key = ''
+        self.save()
+
     def auto_gen_auth(self):
         password = str(uuid.uuid4())
         private_key, public_key = ssh_key_gen(
-            username=self.username, password=password
+            username=self.username
         )
         self.set_auth(password=password,
                       private_key=private_key,
