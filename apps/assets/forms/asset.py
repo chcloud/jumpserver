@@ -16,7 +16,7 @@ class AssetCreateForm(forms.ModelForm):
         fields = [
             'hostname', 'ip', 'public_ip', 'port',  'comment',
             'nodes', 'is_active', 'admin_user', 'labels', 'platform',
-            'domain',
+            'domain', 'protocol',
 
         ]
         widgets = {
@@ -45,7 +45,7 @@ class AssetCreateForm(forms.ModelForm):
                 'root or other NOPASSWD sudo privilege user existed in asset,'
                 'If asset is windows or other set any one, more see admin user left menu'
             ),
-            'platform': _("* required Must set exact system platform, Windows, Linux ..."),
+            # 'platform': _("* required Must set exact system platform, Windows, Linux ..."),
             'domain': _("If your have some network not connect with each other, you can set domain")
         }
 
@@ -56,7 +56,7 @@ class AssetUpdateForm(forms.ModelForm):
         fields = [
             'hostname', 'ip', 'port', 'nodes',  'is_active', 'platform',
             'public_ip', 'number', 'comment', 'admin_user', 'labels',
-            'domain',
+            'domain', 'protocol',
         ]
         widgets = {
             'nodes': forms.SelectMultiple(attrs={
@@ -85,7 +85,7 @@ class AssetUpdateForm(forms.ModelForm):
                 'root or other NOPASSWD sudo privilege user existed in asset,'
                 'If asset is windows or other set any one, more see admin user left menu'
             ),
-            'platform': _("* required Must set exact system platform, Windows, Linux ..."),
+            # 'platform': _("* required Must set exact system platform, Windows, Linux ..."),
             'domain': _("If your have some network not connect with each other, you can set domain")
         }
 
